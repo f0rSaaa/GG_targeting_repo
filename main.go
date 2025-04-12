@@ -5,16 +5,26 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/astaxie/beego/orm"
 	"github.com/greedy_game/targeting_engine/service"
 	"github.com/greedy_game/targeting_engine/transport"
+	"github.com/greedy_game/targeting_engine/util"
 )
 
 func main() {
 	logger := log.New(os.Stdout, "", log.LstdFlags)
+	db := orm.NewOrm()
+
+	model := service.NewDatabseModel(
+		&db,
+	)
+
+	//initialize the database
+	util.Init()
 
 	// Create service
-	var log log.Logger
-	svc := service.NewService(&log)
+
+	svc := service.NewService(logger, model)
 
 	// Create HTTP handler
 	handler := transport.NewHTTPHandler(svc)

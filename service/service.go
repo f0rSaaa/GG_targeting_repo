@@ -14,11 +14,13 @@ type Service interface {
 
 type deliveryService struct {
 	Logger *log.Logger
+	Model  Model
 }
 
-func NewService(log *log.Logger) Service {
+func NewService(log *log.Logger, model Model) Service {
 	return &deliveryService{
 		Logger: log,
+		Model:  model,
 	}
 }
 

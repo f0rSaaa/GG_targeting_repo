@@ -16,12 +16,13 @@ import (
 func NewHTTPHandler(svc service.Service) http.Handler {
 	r := mux.NewRouter()
 
-	// Creating delivery endpoint
+	// Create endpoint
 	getDeliveryEndpoint := endpoint.MakeGetDeliveryStatusEndpoint(svc)
 
 	// Create v1 subrouter
 	v1 := r.PathPrefix("/v1").Subrouter()
 
+	// GET /v1/delivery
 	v1.Methods("GET").Path("/delivery").Handler(kithttp.NewServer(
 		getDeliveryEndpoint,
 		decodeGetDeliveryRequest,
