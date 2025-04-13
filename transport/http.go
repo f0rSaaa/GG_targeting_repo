@@ -10,6 +10,7 @@ import (
 	"github.com/greedy_game/targeting_engine/domain"
 	"github.com/greedy_game/targeting_engine/endpoint"
 	"github.com/greedy_game/targeting_engine/service"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // NewHTTPHandler returns an HTTP handler for the delivery service
@@ -28,6 +29,9 @@ func NewHTTPHandler(svc service.Service) http.Handler {
 		decodeGetDeliveryRequest,
 		encodeResponse,
 	))
+
+	// Add metrics endpoint
+	r.Handle("/metrics", promhttp.Handler())
 
 	return r
 }
