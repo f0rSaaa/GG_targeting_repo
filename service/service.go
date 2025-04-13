@@ -30,19 +30,19 @@ func (s *deliveryService) GetDeliveryStatus(ctx context.Context) (*domain.Respon
 	country := cast.ToString(ctx.Value("country"))
 	os := cast.ToString(ctx.Value("os"))
 
-	s.Logger.Println("app", app)
-	s.Logger.Println("country", country)
-	s.Logger.Println("os", os)
+	campaigns, err := s.Model.GetCampaigns(app, country, os)
+	if err != nil {
+		return nil, err
+	}
+
+	campaignsResp := []domain.CampaignResp{}
+	for _, campaign := range campaigns {
+		campaignsResp = append(campaignsResp, *campaign.ToCampaignResp())
+	}
 
 	return &domain.ResponseModel{
-		Code: 200,
-		Msg:  "Success",
-		Model: domain.Campaign{
-			Id:     "test-campaign",
-			Name:   "Test Campaign",
-			Image:  "http://example.com/image.jpg",
-			CTA:    "Click Here",
-			Status: "ACTIVE",
-		},
+		Code:  200,
+		Msg:   "Success",
+		Model: campaignsResp,
 	}, nil
 }

@@ -7,11 +7,9 @@ type ResponseModel struct {
 }
 
 type Campaign struct {
-	Id     string
-	Name   string
-	Image  string
-	CTA    string
-	Status string
+	Id    string
+	Image string
+	CTA   string
 }
 
 type CampaignResp struct {
@@ -31,4 +29,12 @@ type DeliveryResponse struct {
 	Msg   string      `json:"message"`
 	Model interface{} `json:"model,omitempty"`
 	Err   string      `json:"error,omitempty"`
+}
+
+func (c Campaign) ToCampaignResp() *CampaignResp {
+	return &CampaignResp{
+		Id:    c.Id,
+		Image: c.Image,
+		CTA:   c.CTA,
+	}
 }

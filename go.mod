@@ -5,6 +5,7 @@ go 1.23.2
 require (
 	github.com/astaxie/beego v1.12.3
 	github.com/go-kit/kit v0.13.0
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/mux v1.8.1
 	github.com/spf13/cast v1.7.1
 )
