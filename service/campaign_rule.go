@@ -26,16 +26,3 @@ func (t *CampaignRule) TableName() string {
 func init() {
 	orm.RegisterModel(new(CampaignRule))
 }
-
-// get the campaign based on the app, country and os
-func (t *CampaignRule) GetCampaignsOnAppCountryAndOS(app, country, os string) (campaigns []CampaignRule, err error) {
-
-	o := orm.NewOrm()
-	query := `select * from campaigns_rule where FIND_IN_SET('` + app + `', include_app) > 0 and FIND_IN_SET('` + country + `', include_country) > 0 and FIND_IN_SET('` + os + `', include_os) > 0`
-	_, err = o.Raw(query).QueryRows(campaigns)
-	if err != nil {
-		return nil, err
-	}
-
-	return campaigns, nil
-}

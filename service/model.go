@@ -67,29 +67,24 @@ func (m *model) GetCampaigns(app, country, os string) ([]domain.Campaign, error)
 }
 
 func (m *model) ExcludeRule(rule CampaignRule, app, country, os string) bool {
-
 	// Check excludes
-	if rule.ExcludeApp != "" && rule.ExcludeApp == app {
-		//there can be multiple apps in the exclude app field
+	if rule.ExcludeApp != "" {
 		excludeApps := strings.Split(rule.ExcludeApp, ",")
 		if slices.Contains(excludeApps, app) {
-			return false
+			return true
 		}
 	}
-	if rule.ExcludeCountry != "" && rule.ExcludeCountry == country {
-		//there can be multiple countries in the exclude country field
+	if rule.ExcludeCountry != "" {
 		excludeCountries := strings.Split(rule.ExcludeCountry, ",")
 		if slices.Contains(excludeCountries, country) {
-			return false
+			return true
 		}
 	}
-	if rule.ExcludeOS != "" && rule.ExcludeOS == os {
-		//there can be multiple os in the exclude os field
+	if rule.ExcludeOS != "" {
 		excludeOS := strings.Split(rule.ExcludeOS, ",")
 		if slices.Contains(excludeOS, os) {
-			return false
+			return true
 		}
 	}
-
-	return true
+	return false
 }
