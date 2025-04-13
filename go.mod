@@ -1,6 +1,6 @@
 module github.com/greedy_game/targeting_engine
 
-go 1.23.2
+go 1.22
 
 require (
 	github.com/astaxie/beego v1.12.3
