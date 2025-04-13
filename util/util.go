@@ -3,8 +3,10 @@ package util
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/astaxie/beego/orm"
+	"github.com/greedy_game/targeting_engine/domain"
 )
 
 // getEnvOrDefault gets environment variable value or returns default if not set
@@ -36,4 +38,18 @@ func Init() {
 	}
 
 	fmt.Println("Connected to MySQL database successfully!")
+}
+
+func FindMissingParam(req domain.DeliveryRequest) string {
+	var missingParams []string
+	if req.App == "" {
+		missingParams = append(missingParams, "app")
+	}
+	if req.Country == "" {
+		missingParams = append(missingParams, "country")
+	}
+	if req.OS == "" {
+		missingParams = append(missingParams, "os")
+	}
+	return strings.Join(missingParams, ",")
 }

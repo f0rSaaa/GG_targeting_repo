@@ -6,6 +6,7 @@ import (
 	"github.com/go-kit/kit/endpoint"
 	"github.com/greedy_game/targeting_engine/domain"
 	"github.com/greedy_game/targeting_engine/service"
+	"github.com/greedy_game/targeting_engine/util"
 )
 
 func MakeGetDeliveryStatusEndpoint(svc service.Service) endpoint.Endpoint {
@@ -14,9 +15,10 @@ func MakeGetDeliveryStatusEndpoint(svc service.Service) endpoint.Endpoint {
 
 		// Validate request
 		if req.App == "" || req.Country == "" || req.OS == "" {
+			missingParams := util.FindMissingParam(req)
 			return domain.DeliveryResponse{
 				Code: 400,
-				Msg:  "missing app/country/os param",
+				Msg:  "missing " + missingParams + " param",
 			}, nil
 		}
 
