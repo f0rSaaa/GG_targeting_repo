@@ -24,8 +24,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o targeting-engine
 # Final stage
 FROM alpine:latest
 
-# Install CA certificates for HTTPS
-RUN apk --no-cache add ca-certificates
+# Install CA certificates and curl for healthcheck
+RUN apk --no-cache add ca-certificates curl
 
 WORKDIR /app
 
