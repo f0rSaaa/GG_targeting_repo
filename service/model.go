@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"slices"
 	"strings"
 
@@ -45,8 +44,7 @@ func (m *model) GetCampaigns(app, country, os string) ([]domain.Campaign, error)
 		return []domain.Campaign{}, nil
 	}
 
-	campString := strings.Join(validCampaigns, ",")
-	fmt.Println(campString)
+	campString := "'" + strings.Join(validCampaigns, "','") + "'"
 	query = `select * from campaigns where cid in (` + campString + `) and status = 'ACTIVE' order by id desc`
 
 	var campaigns []*Campaign
